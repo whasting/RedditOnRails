@@ -1,5 +1,12 @@
 <h2><%= @item.title %></h2>
+<h3>Content:</h3>
 <%= @item.url %>
+<br>
 <%= @item.content %>
+<br>
 <%= @item.author.email %>
+<br>
+<%= link_to "Edit Post", edit_post_url(@item) %>
+<%= link_to "Delete Post", post_url(@item), method: :delete %>
+<br>
 <%= link_to "Back to Sub", sub_url(@item.sub) %>

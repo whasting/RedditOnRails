@@ -1,0 +1,24 @@
+<% verb = item.persisted? ? "Updating" : "Creating" %>
+<% action_url = item.persisted? ? post_url(item) : posts_url %>
+<% button_text = item.persisted? ? "Update" : "Create" %>
+<% actual_method = item.persisted? ? :patch : :post %>
+
+<h3><%= verb %> post in <%= item.sub.title %></h3>
+
+<form class="" action="<%= action_url %>" method="post">
+  <input type="hidden" name="_method" value="<%= actual_method %>">
+  <label>Title</label>
+  <input type="text" name="item[title]" value="<%= item.title %>">
+  <br>
+  <label>Url</label>
+  <input type="text" name="item[url]" value="<%= item.url %>">
+  <br>
+  <label>Content</label>
+  <textarea name="item[content]" rows="8" cols="80"><%= item.content %></textarea>
+  <br>
+  <input type="hidden" name="item[user_id]" value="<%= current_user.id %>">
+  <input type="hidden" name="item[sub_id]" value="<%= item.sub_id %>">
+  <input type="submit" value="<%= button_text %>">
+</form>
+<br>
+<%= link_to "Back to #{item.sub.title}", sub_url(item.sub) %>

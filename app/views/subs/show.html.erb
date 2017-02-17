@@ -11,9 +11,16 @@
 </p>
 
 <p>
-  <strong>User:</strong>
-  <%= @sub.user_id %>
+  <strong>Moderator:</strong>
+  <%= @sub.moderator.email %>
 </p>
 
-<%= link_to 'Edit', edit_sub_path(@sub) %> |
+<ul>
+<% @sub.posts.each do |post| %>
+  <li><%= link_to "#{post.title} by #{post.author.email}", post_url(post) %></li>
+<% end %>
+</ul>
+<%= link_to 'Create Post', new_sub_post_url(@sub) %>|
+<%= link_to 'Edit', edit_sub_path(@sub) %>
+<br>
 <%= link_to 'Back', subs_path %>

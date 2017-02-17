@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
   def new
+    @item = Post.new
+    @item.sub_id = params[:sub_id]
   end
 
   def create
