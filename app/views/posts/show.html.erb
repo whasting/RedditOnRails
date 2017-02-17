@@ -1,0 +1,5 @@
+<h2><%= @item.title %></h2>
+<%= @item.url %>
+<%= @item.content %>
+<%= @item.author.email %>
+<%= link_to "Back to Sub", sub_url(@item.sub) %>

@@ -1,7 +1,13 @@
 Rails.application.routes.draw do
 
-  resources :subs
-  root to: 'session#new'
+  root to: 'sessions#new'
+
+  resources :subs do
+    resources :posts, only: [:new]
+  end
+
+  resources :posts, only: [:create, :edit, :destroy, :update, :show]
+
   resource :session, only: [:new, :create, :destroy]
   resources :users, only: [:new, :create, :show]
   # The priority is based upon order of creation: first created -> highest priority.

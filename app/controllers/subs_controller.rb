@@ -1,6 +1,6 @@
 class SubsController < ApplicationController
   before_action :set_sub, only: [:show, :edit, :update, :destroy]
-
+  before_action :kickout, only: [:edit, :update, :destroy]
   # GET /subs
   # GET /subs.json
   def index
@@ -25,7 +25,7 @@ class SubsController < ApplicationController
   # POST /subs.json
   def create
     @sub = Sub.new(sub_params)
-
+    @sub.user_id = current_user.id
     respond_to do |format|
       if @sub.save
         format.html { redirect_to @sub, notice: 'Sub was successfully created.' }
@@ -64,11 +64,22 @@ class SubsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_sub
-      @sub = Sub.find(params[:id])
+      @sub = Sub.find_by_id(params[:id])
+      unless @sub
+        flash[:errors] = ['Sub does not exist :(']
+        redirect_to subs_url
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sub_params
       params.require(:sub).permit(:title, :description, :user_id)
+    end
+
+    def kickout
+      if !logged_in? || current_user != @sub.moderator
+        flash[:errors] = ["Action is not permitted"]
+        redirect_to subs_url
+      end
     end
 end
