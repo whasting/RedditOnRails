@@ -6,6 +6,13 @@
 <br>
 <%= @item.author.email %>
 <br>
+<h3>Subs that this post is in:</h3>
+<ul>
+<% @item.subs.each do |sub| %>
+  <li><%= link_to sub.title, sub %></li>
+<% end %>
+</ul>
+<br>
 <%= link_to "Edit Post", edit_post_url(@item) %>
 <%= link_to "Delete Post", post_url(@item), method: :delete %>
 <br>
